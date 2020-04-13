@@ -56,9 +56,13 @@ setup(name="nativecap",
       classifiers=[
         "Development Status :: 3 - Alpha",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3.6"
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8"
       ],
-      python_requires=">=3.6",
       packages=["nativecap"],
       test_suite="nose.collector",
       tests_require=["nose"],

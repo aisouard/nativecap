@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <windows.h>
 
-extern "C" __declspec(dllexport) void __cdecl nativecap(int x, int y, int width, int height, unsigned char* data) {
+__declspec(dllexport) void __cdecl nativecap(int x, int y, int width, int height, unsigned char* data) {
     HDC desktop_dc = GetDC(0);
     HDC capture_dc = CreateCompatibleDC(desktop_dc);
     HBITMAP bitmap = CreateCompatibleBitmap(desktop_dc, width, height);

@@ -5,15 +5,10 @@ jobs:
     - services: docker
     - os: osx
       language: shell
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.6.0
-        - export PATH="/c/Python36:/c/Python36/Scripts:$PATH"
 
 env:
   global:
-    - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
+    - CIBW_BUILD="cp27-* cp35-* cp36-* cp37-* cp38-*"
     - TWINE_USERNAME=__token__
 
 install:
