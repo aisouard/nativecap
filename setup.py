@@ -1,26 +1,44 @@
-import platform
+import sys
+
 from setuptools import setup
 from distutils.core import Extension
 
 
 platform_settings = {
-    "Linux": {
-        "sources": ["nativecap_x11.c"],
+    "win32": {
+        "macros": [("WIN32", None)],
+        "libraries": []
+    },
+    "cygwin": {
+        "macros": [("WIN32", None)],
+        "libraries": []
+    },
+    "msys": {
+        "macros": [("WIN32", None)],
+        "libraries": []
+    },
+    "darwin": {
+        "macros": [("MACOS", None)],
+        "libraries": []
+    },
+    "linux": {
+        "macros": [("UNIX", None)],
         "libraries": ["X11"]
-    },
-    "Windows": {
-        "sources": ["nativecap_win.c"],
-        "libraries": []
-    },
-    "Darwin": {
-        "sources": ["nativecap_mac.c"],
-        "libraries": []
     }
 }
 
-settings = platform_settings[platform.system()]
+platform = sys.platform
+if platform not in platform_settings:
+    platform = "linux"
+
+settings = platform_settings[platform]
 module = Extension("nativecap",
-                   sources=settings["sources"],
+                   sources=[
+                       "nativecap_x11.c",
+                       "nativecap_win.c",
+                       "nativecap_mac.c"
+                   ],
+                   define_macros=settings["macros"],
                    libraries=settings["libraries"])
 
 with open("README.md", "r") as fh:
@@ -29,7 +47,7 @@ with open("README.md", "r") as fh:
 setup(name="nativecap",
       license="MIT",
       url="https://github.com/aisouard/pynativecap",
-      version="1.0",
+      version="1.0.0",
       author="Axel Isouard",
       author_email="axel@isouard.fr",
       description="Native screen capture module",
@@ -40,8 +58,8 @@ setup(name="nativecap",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.6"
       ],
-      python_requires='>=3.6',
+      python_requires=">=3.6",
       packages=["nativecap"],
-      test_suite='nose.collector',
-      tests_require=['nose'],
+      test_suite="nose.collector",
+      tests_require=["nose"],
       ext_modules=[module])

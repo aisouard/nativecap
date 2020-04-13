@@ -1,3 +1,4 @@
+#ifdef WIN32
 #include <stdio.h>
 #include <windows.h>
 
@@ -21,3 +22,4 @@ extern "C" __declspec(dllexport) void __cdecl nativecap(int x, int y, int width,
     ReleaseDC(0, desktop_dc);
     DeleteObject(bitmap);
 }
+#endif

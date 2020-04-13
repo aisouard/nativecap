@@ -1,6 +1,7 @@
 # nativecap
 
-Take a screenshot with Python, natively.
+Take a screenshot with Python, natively, using a method based on
+[that answer](https://stackoverflow.com/a/16141058/1025222).
 
 ## Setup
 
@@ -9,6 +10,14 @@ pip install nativecap
 ```
 
 ## Usage
+
+```python
+import nativecap
+
+buffer = nativecap.capture(top_left_x, top_left_y, width, height)
+```
+
+## Example
 
 ```python
 import numpy as np
