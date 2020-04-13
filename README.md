@@ -14,12 +14,14 @@ pip install nativecap
 ```python
 import nativecap
 
+# outputs an array containing pixel colors in the BGRA format
 buffer = nativecap.capture(top_left_x, top_left_y, width, height)
 ```
 
 ## Example
 
 ```python
+import cv2
 import numpy as np
 import nativecap
 import platform
@@ -32,13 +34,8 @@ height = 480
 
 buffer = nativecap.capture(x, y, width, height)
 image = np.ctypeslib.as_array(buffer)
+image = image.reshape(width, height, 4)
 
-if platform.system() == "Windows":
-    # remove the alpha channel, swap BGR to RGB
-    image = image.reshape(width, height, 4)[:, :, -2::-1]
-elif platform.system() == "Linux":
-    # just reshape it
-    image = image.reshape(width, height, 3)
-else:
-    raise "Unsupported platform {}".format(platform.system())
+cv2.imshow("image", image)
+cv2.waitKey(0)
 ```

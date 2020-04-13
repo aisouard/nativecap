@@ -28,10 +28,11 @@ void nativecap(int x, int y, int width, int height, unsigned char* data) {
             unsigned char green = (pixel & green_mask) >> 8;
             unsigned char red   = (pixel & red_mask) >> 16;
 
+            data[ii + 3] = 255;
             data[ii + 2] = red;
             data[ii + 1] = green;
             data[ii + 0] = blue;
-            ii += 3;
+            ii += 4;
         }
     }
 

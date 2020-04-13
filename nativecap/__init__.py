@@ -4,28 +4,15 @@ import os
 import platform
 
 
-platform_settings = {
-    "Linux": {
-        "extension": ".so",
-        "channels": 3
-    },
-    "Windows": {
-        "extension": ".dll",
-        "channels": 4
-    },
-    "Darwin": {
-        "extension": ".dylib",
-        "channels": 3
-    }
+extensions = {
+    "Windows": ".dll",
+    "Darwin": ".dylib"
 }
 
 system = platform.system()
-if system not in platform_settings:
-    raise "Unsupported platform {}".format(system)
-
-settings = platform_settings[system]
-glob_str = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',
-                                        'nativecap*{}'.format(settings["extension"]))
+extension = ".so" if system not in extensions else extensions[system]
+glob_str = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), '..', 'nativecap*{}'.format(extension))
 library = ctypes.CDLL(glob.glob(glob_str)[0])
 library.nativecap.argtypes = [
     ctypes.c_int32,
@@ -35,9 +22,8 @@ library.nativecap.argtypes = [
     ctypes.c_void_p
 ]
 
-num_channels = settings["channels"]
 
 def capture(x, y, width, height):
-    buffer = (ctypes.c_ubyte * (width * height * num_channels))()
+    buffer = (ctypes.c_ubyte * (width * height * 4))()
     library.nativecap(x, y, width, height, buffer)
     return buffer
