@@ -13,6 +13,7 @@ jobs:
 
 env:
   global:
+    - CIBW_SKIP="cp27-* cp33-* cp34-* cp35-*"
     - TWINE_USERNAME=__token__
 
 install:
