@@ -7,7 +7,7 @@ from distutils.core import Extension
 platform_settings = {
     "win32": {
         "macros": [("WIN32", None)],
-        "libraries": []
+        "libraries": ["gdi32", "user32"]
     },
     "cygwin": {
         "macros": [("WIN32", None)],

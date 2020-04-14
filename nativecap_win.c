@@ -1,6 +1,7 @@
 #ifdef WIN32
 #include <stdio.h>
 #include <windows.h>
+#include <Python.h>
 
 __declspec(dllexport) void __cdecl nativecap(int x, int y, int width, int height, unsigned char* data) {
     HDC desktop_dc = GetDC(0);
@@ -15,11 +16,16 @@ __declspec(dllexport) void __cdecl nativecap(int x, int y, int width, int height
 
     GetDIBits(desktop_dc, bitmap, 0, 0, NULL, &bitmap_info, DIB_RGB_COLORS);
     bitmap_info.bmiHeader.biCompression = BI_RGB;
-    GetDIBits(desktop_dc, bitmap, 0, bitmap_info.bmiHeader.biHeight, reinterpret_cast<LPVOID>(data), &bitmap_info, DIB_RGB_COLORS);
+    GetDIBits(desktop_dc, bitmap, 0, bitmap_info.bmiHeader.biHeight, (LPVOID)data, &bitmap_info, DIB_RGB_COLORS);
 
     SelectObject(desktop_dc, old_bitmap);
     DeleteDC(capture_dc);
     ReleaseDC(0, desktop_dc);
     DeleteObject(bitmap);
+}
+
+PyMODINIT_FUNC PyInit_nativecap(void) {
+    Py_Initialize();
+    return NULL;
 }
 #endif

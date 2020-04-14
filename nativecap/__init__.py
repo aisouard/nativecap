@@ -5,7 +5,7 @@ import platform
 
 
 extensions = {
-    "Windows": ".dll",
+    "Windows": ".pyd",
     "Darwin": ".dylib"
 }
 
