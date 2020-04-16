@@ -23,8 +23,11 @@ __declspec(dllexport) void __cdecl nativecap(int x, int y, int width, int height
     DeleteObject(bitmap);
 }
 
+PyMODINIT_FUNC initnativecap(void) {
+    return NULL;
+}
+
 PyMODINIT_FUNC PyInit_nativecap(void) {
-    Py_Initialize();
     return NULL;
 }
 #endif
