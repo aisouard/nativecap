@@ -6,7 +6,6 @@ skip_branch_with_pr: true
 
 environment:
   CIBW_BUILD: cp27-* cp33-* cp34-* cp35-* cp36-* cp37-* cp38-*
-  CIBW_TEST_COMMAND: python -W default -m nosetest
 
 install:
   - set PATH=C:\Python37;%PATH%
