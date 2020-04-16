@@ -1,6 +1,5 @@
 #ifdef WIN32
 #include <stdio.h>
-#include <string.h>
 #include <windows.h>
 #include <Python.h>
 
@@ -12,18 +11,18 @@ __declspec(dllexport) void __cdecl nativecap(int x, int y, int width, int height
 
     BitBlt(capture_dc, 0, 0, width, height, desktop_dc, x, y, SRCCOPY);
 
-    BITMAPINFO bitmap_info;
-    memset(&bmfh, 0, sizeof(BITMAPINFO));
-    bitmap_info.bmiHeader.biSize = sizeof(bitmap_info.bmiHeader);
+    PBITMAPINFO bitmap_info = (PBITMAPINFO)LocalAlloc(LPTR, sizeof(BITMAPINFOHEADER));
+    bitmap_info->bmiHeader.biSize = sizeof(bitmap_info->bmiHeader);
 
-    GetDIBits(desktop_dc, bitmap, 0, 0, NULL, &bitmap_info, DIB_RGB_COLORS);
-    bitmap_info.bmiHeader.biCompression = BI_RGB;
-    GetDIBits(desktop_dc, bitmap, 0, bitmap_info.bmiHeader.biHeight, (LPVOID)data, &bitmap_info, DIB_RGB_COLORS);
+    GetDIBits(desktop_dc, bitmap, 0, 0, NULL, bitmap_info, DIB_RGB_COLORS);
+    bitmap_info.->bmiHeader.biCompression = BI_RGB;
+    GetDIBits(desktop_dc, bitmap, 0, bitmap_info->bmiHeader.biHeight, (LPVOID)data, bitmap_info, DIB_RGB_COLORS);
 
     SelectObject(desktop_dc, old_bitmap);
     DeleteDC(capture_dc);
     ReleaseDC(0, desktop_dc);
     DeleteObject(bitmap);
+    LocalFree(bitmap_info);
 }
 
 PyMODINIT_FUNC PyInit_nativecap(void) {
