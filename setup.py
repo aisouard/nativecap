@@ -47,7 +47,7 @@ with open("README.md", "r") as fh:
 setup(name="nativecap",
       license="MIT",
       url="https://github.com/aisouard/pynativecap",
-      version="1.0.1",
+      version="1.0.2",
       author="Axel Isouard",
       author_email="axel@isouard.fr",
       description="Native screen capture module",
