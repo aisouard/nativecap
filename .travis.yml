@@ -8,7 +8,7 @@ jobs:
 
 env:
   global:
-    - CIBW_BUILD="cp27-* cp35-* cp36-* cp37-* cp38-*"
+    - CIBW_BUILD="cp27-* cp33-* cp34-* cp35-* cp36-* cp37-* cp38-*"
     - TWINE_USERNAME=__token__
 
 install:

@@ -1,0 +1,22 @@
+branches:
+  only:
+    - master
+
+skip_branch_with_pr: true
+
+environment:
+  CIBW_BUILD: cp27-* cp33-* cp34-* cp35-* cp36-* cp37-* cp38-*
+  CIBW_TEST_COMMAND: python -W default -m nosetest
+
+install:
+  - set PATH=C:\Python37;%PATH%
+  - cmd: python -m pip install --upgrade cibuildwheel==1.3.0
+  - cmd: touch .cibuildwheel
+
+build_script:
+  - cmd: python -m cibuildwheel --output-dir wheelhouse
+  - ps: >-
+      if ($env:APPVEYOR_REPO_TAG -eq "true") {
+        Invoke-Expression "python -m pip install twine"
+        Invoke-Expression "python -m twine upload --skip-existing wheelhouse/*.whl"
+      }
