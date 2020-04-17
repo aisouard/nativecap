@@ -4,13 +4,8 @@ import os
 import platform
 
 
-extensions = {
-    "Windows": ".pyd",
-    "Darwin": ".dylib"
-}
-
 system = platform.system()
-extension = ".so" if system not in extensions else extensions[system]
+extension = ".pyd" if system == "Windows" else ".so"
 glob_str = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), '..', 'nativecap*{}'.format(extension))
 library = ctypes.CDLL(glob.glob(glob_str)[0])

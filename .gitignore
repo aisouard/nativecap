@@ -4,6 +4,9 @@
 *.dylib
 *.dll
 
+# macOS stuff
+.DS_Store
+
 # Setuptools distribution folder.
 /build/
 /dist/

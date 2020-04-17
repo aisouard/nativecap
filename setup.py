@@ -7,23 +7,32 @@ from distutils.core import Extension
 platform_settings = {
     "win32": {
         "macros": [("WIN32", None)],
-        "libraries": ["gdi32", "user32"]
+        "libraries": ["gdi32", "user32"],
+        "extra_link_args": []
     },
     "cygwin": {
         "macros": [("WIN32", None)],
-        "libraries": []
+        "libraries": [],
+        "extra_link_args": []
     },
     "msys": {
         "macros": [("WIN32", None)],
-        "libraries": []
+        "libraries": [],
+        "extra_link_args": []
     },
     "darwin": {
         "macros": [("MACOS", None)],
-        "libraries": []
+        "libraries": [],
+        "extra_link_args": [
+            "-framework", "CoreFoundation",
+            "-framework", "CoreGraphics",
+            "-framework", "ImageIO"
+        ]
     },
     "linux": {
         "macros": [("UNIX", None)],
-        "libraries": ["X11"]
+        "libraries": ["X11"],
+        "extra_link_args": []
     }
 }
 
@@ -39,7 +48,8 @@ module = Extension("nativecap",
                        "nativecap_mac.c"
                    ],
                    define_macros=settings["macros"],
-                   libraries=settings["libraries"])
+                   libraries=settings["libraries"],
+                   extra_link_args=settings["extra_link_args"])
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
